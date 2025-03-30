@@ -1,4 +1,14 @@
 START main
+  COMPUTE("Hello, World!") => result
+  IF result != ""
+    PRINT result
+  END
+END
+
+
+
+
+START main
   COMPUTE(3, 7) => result
   IF result > 0
     SEND to MEMORY

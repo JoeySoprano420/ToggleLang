@@ -1,0 +1,216 @@
+ToggleLang Compiler: User Manual and Guide
+
+Welcome to the official ToggleLang Compiler User Manual! In this guide, you will learn how to use the ToggleLang language and compiler, which supports a variety of advanced features such as complex data structures, dynamic memory management, recursive functions, and enhanced safety features.
+
+Table of Contents
+	1.	Introduction
+	2.	Installation
+	3.	Writing ToggleLang Code
+	4.	Understanding the Syntax
+	5.	Compilation Process
+	6.	Advanced Features
+	7.	Safety and Error Handling
+	8.	Debugging and Troubleshooting
+	9.	Example Programs
+	10.	FAQ
+
+⸻
+
+1. Introduction
+
+ToggleLang is a lightweight programming language designed for efficiency and safety. It supports a variety of advanced features, including complex data types (arrays, objects), recursion, and dynamic memory management. The ToggleLang Compiler takes your source code and compiles it into machine-readable assembly, then assembles and links the code to generate an executable. This manual will walk you through how to use the language, write your programs, compile them, and troubleshoot common issues.
+
+2. Installation
+
+To use ToggleLang, you need the following:
+	•	ToggleLang Compiler (Windows version for this guide)
+	•	NASM (Netwide Assembler) for assembly generation
+	•	GoLink for linking the compiled object file into an executable
+
+Steps to Install:
+	1.	Download ToggleLang Compiler: Get the latest version of the ToggleLang compiler from the official repository or compiled binaries.
+	2.	Install NASM: Download and install NASM on your system.
+	3.	Install GoLink: Download and install GoLink.
+	4.	Set Environment Variables: Make sure the nasm and GoLink executables are in your system’s PATH for easy access.
+
+⸻
+
+3. Writing ToggleLang Code
+
+ToggleLang source files use .tl as their file extension. The source code consists of statements like functions, loops, conditions, and data structures.
+
+Basic Structure:
+
+compute 5 + 3
+if result > 10
+    compute result - 1
+return result
+
+Example Breakdown:
+	1.	Operations:
+	•	compute: Performs a calculation.
+	•	if: Conditional statement.
+	•	return: Returns a value.
+	2.	Data Types:
+	•	Integer values (e.g., 5, 3) and variables (e.g., result) are used.
+
+⸻
+
+4. Understanding the Syntax
+
+ToggleLang has a simple, intuitive syntax for common programming tasks. Below are the key components of the syntax:
+
+Operations:
+	1.	compute: Performs a computation and stores the result.
+	•	Syntax: compute <expression>
+	•	Example: compute 5 + 3
+	2.	if: Conditional statement to execute code based on a condition.
+	•	Syntax: if <condition>
+	•	Example: if result > 10
+	3.	while: Repeats code as long as the condition is true.
+	•	Syntax: while <condition>
+	•	Example: while result < 20
+	4.	return: Returns a value from a function or operation.
+	•	Syntax: return <value>
+	•	Example: return result
+	5.	array: Declares an array and its elements.
+	•	Syntax: array <name> [element1, element2, ...]
+	•	Example: array myArray [1, 2, 3, 4]
+	6.	object: Declares an object with properties.
+	•	Syntax: object <name> { property1: value1, property2: value2, ... }
+	•	Example: object myObject {name: "John", age: 30}
+
+Control Flow:
+	1.	break: Exits from a loop or function early.
+	•	Syntax: break
+	2.	continue: Skips the current iteration of a loop.
+	•	Syntax: continue
+
+⸻
+
+5. Compilation Process
+
+The ToggleLang compiler converts source code into machine-readable assembly code, assembles it, and links it to produce an executable.
+
+Steps to Compile:
+	1.	Write Your Code: Save your ToggleLang source code with the .tl extension.
+	2.	Compile the Source Code: Run the following batch script to compile your code:
+
+toggle_compiler.bat source.tl
+
+This script:
+	•	Parses the source code.
+	•	Converts it into JSON format.
+	•	Generates assembly code.
+	•	Assembles the code into an object file.
+	•	Links the object file to produce the final executable.
+
+	3.	Run the Executable: After compilation, the final executable will be named program.exe. You can run it directly:
+
+program.exe
+
+
+
+⸻
+
+6. Advanced Features
+
+Complex Data Types:
+	1.	Nested Arrays: ToggleLang supports nested arrays, allowing for multi-dimensional structures.
+	•	Example:
+
+array myArray [[1, 2, 3], [4, 5, 6]]
+
+
+	2.	Objects: ToggleLang supports object-like structures with key-value pairs, which can be used for more complex data modeling.
+	•	Example:
+
+object person { name: "Alice", age: 25, occupation: "Engineer" }
+
+
+
+Recursive Functions:
+
+ToggleLang supports recursion, meaning functions can call themselves. The compiler handles this by managing stack depth and preventing stack overflows with predefined limits.
+
+⸻
+
+7. Safety and Error Handling
+
+To ensure robust and reliable code execution, ToggleLang includes the following safety features:
+	1.	Memory Bounds Checking: Prevents out-of-bounds memory access by automatically checking array and memory accesses during compilation.
+	2.	Stack Overflow Prevention: Limits recursion depth to avoid stack overflow errors.
+	3.	Error Handling: If the compiler encounters an issue (e.g., invalid memory access or syntax errors), it will report the issue with a line number and description.
+
+⸻
+
+8. Debugging and Troubleshooting
+
+If you encounter errors or issues during compilation, follow these steps:
+	1.	Check Syntax: Ensure that all statements are properly formatted and all brackets and parentheses are closed.
+	2.	Check Variable Names: Ensure that variables and data structures are correctly referenced.
+	3.	Review Error Messages: The compiler provides helpful error messages indicating the source of the problem (e.g., line number, type of error).
+	4.	Examine Assembly Code: If needed, inspect the generated assembly code (program.asm) for detailed insights into the code generation process.
+
+⸻
+
+9. Example Programs
+
+Here are a few example programs in ToggleLang:
+
+Example 1: Simple Computation
+
+compute 5 + 3
+return result
+
+Example 2: Conditional Logic
+
+compute 10
+if result > 5
+    compute result - 1
+return result
+
+Example 3: Array Manipulation
+
+array numbers [1, 2, 3, 4, 5]
+compute numbers[0] + numbers[2]
+return result
+
+Example 4: Object Handling
+
+object person { name: "John", age: 30 }
+return person.name
+
+
+
+⸻
+
+10. FAQ
+
+Q1: What does “compute” do in ToggleLang?
+
+A1: The compute operation performs basic arithmetic calculations or operations and stores the result.
+
+Q2: How do I declare an array?
+
+A2: Use the array keyword, followed by the array name and its elements in square brackets. Example:
+
+array myArray [1, 2, 3]
+
+Q3: Can ToggleLang handle recursion?
+
+A3: Yes, ToggleLang supports recursion. It automatically manages stack depth to prevent stack overflows.
+
+Q4: How do I handle errors during compilation?
+
+A4: The compiler will output error messages with the line number and type of error. Ensure that all variables, operations, and control structures are correctly defined.
+
+Q5: Can I use ToggleLang for advanced system programming?
+
+A5: Yes, ToggleLang is capable of low-level programming tasks, including direct memory manipulation, assembly code generation, and system-level operations.
+
+⸻
+
+Conclusion
+
+ToggleLang is a versatile language with an easy-to-use syntax and advanced features for handling complex data structures, recursive functions, and safety mechanisms. By following this guide, you can write, compile, and run programs efficiently while making the most of ToggleLang’s powerful capabilities. Happy coding!

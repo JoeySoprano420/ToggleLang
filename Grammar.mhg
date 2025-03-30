@@ -1,0 +1,48 @@
+Start -> Program
+
+# Program can contain multiple statements.
+Program -> Statement+
+
+# Statement can be a computation, control flow, or other statements.
+Statement -> ComputeStmt | IfStmt | WhileStmt | ForStmt
+
+# Compute statement performs an assignment or arithmetic computation.
+ComputeStmt -> 'COMPUTE' Expression 'TO' Variable ';'
+
+# Expression can be an arithmetic operation, a literal, or a variable.
+Expression -> Term ( ('+' | '-' | '*' | '/') Term )*
+
+# Terms in expressions can be numbers, variables, or parenthesized expressions.
+Term -> Number | Variable | '(' Expression ')'
+
+# Number can be an integer or a floating point number.
+Number -> Digit+ ( '.' Digit+ )?
+
+# Variable represents a name used in computations.
+Variable -> Identifier
+
+# If statement allows branching.
+IfStmt -> 'IF' Condition 'THEN' Statement ( 'ELSE' Statement )?
+
+# Condition in IF statement is an expression.
+Condition -> Expression ( ('==' | '!=' | '<' | '>' | '<=' | '>=') Expression )?
+
+# While statement allows looping based on a condition.
+WhileStmt -> 'WHILE' Condition 'DO' Statement
+
+# For statement allows looping with a variable range.
+ForStmt -> 'FOR' Variable 'FROM' Expression 'TO' Expression 'DO' Statement
+
+# Identifier represents variable names or function names.
+Identifier -> Letter (Letter | Digit)*
+
+# Digits and letters for identifiers.
+Digit -> '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+Letter -> 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z'
+        | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z'
+
+# Keywords used in statements.
+Keywords -> 'COMPUTE' | 'IF' | 'THEN' | 'ELSE' | 'WHILE' | 'DO' | 'FOR' | 'FROM' | 'TO'
+
+# Operators used for arithmetic and comparison.
+Operators -> '+' | '-' | '*' | '/' | '==' | '!=' | '<' | '>' | '<=' | '>='

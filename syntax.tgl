@@ -1,0 +1,8 @@
+START main
+  COMPUTE(3, 7) => result
+  IF result > 0
+    SEND to MEMORY
+  PROFILE "Sensor Reading"
+    READ_SENSOR() => sensorData
+    LOG(sensorData)
+END

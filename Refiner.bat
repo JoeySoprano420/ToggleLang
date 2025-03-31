@@ -47,6 +47,10 @@ echo ; ToggleLang to Assembly Code > %outputAsm%
 echo section .data >> %outputAsm%
 echo result dd 0 >> %outputAsm%
 echo sensorData dd 0 >> %outputAsm%
+echo message db 'Hello, World!', 0 >> %outputAsm%
+echo message_length equ $-message >> %outputAsm%
+echo userInput db 256 dup(0) >> %outputAsm%
+echo varStore dd 0 >> %outputAsm%
 
 echo section .text >> %outputAsm%
 
@@ -108,6 +112,41 @@ echo !line! | findstr /i "^return" > nul && (
     exit /b
 )
 
+:: Input operation
+echo !line! | findstr /i "^input" > nul && (
+    set "var=!line:input=!"
+    echo       { "type": "input", "variable": "!var!" }, >> %outputJson%
+    exit /b
+)
+
+:: If operation
+echo !line! | findstr /i "^if" > nul && (
+    set "condition=!line:if=!"
+    echo       { "type": "if", "condition": "!condition!" }, >> %outputJson%
+    exit /b
+)
+
+:: Loop operation
+echo !line! | findstr /i "^loop" > nul && (
+    set "iterations=!line:loop=!"
+    echo       { "type": "loop", "iterations": !iterations! }, >> %outputJson%
+    exit /b
+)
+
+:: Store operation
+echo !line! | findstr /i "^store" > nul && (
+    set "args=!line:store=!"
+    echo       { "type": "store", "arguments": [!args!] }, >> %outputJson%
+    exit /b
+)
+
+:: Load operation
+echo !line! | findstr /i "^load" > nul && (
+    set "args=!line:load=!"
+    echo       { "type": "load", "arguments": [!args!] }, >> %outputJson%
+    exit /b
+)
+
 :: Error handling
 echo !line! | findstr /i "^error" > nul && (
     echo Error on line %lineNumber%
@@ -131,7 +170,63 @@ echo !operation! | findstr /i "compute" > nul && (
 
 :: Print Assembly
 echo !operation! | findstr /i "print" > nul && (
-    echo     ; Print operation (To be implemented) >> %outputAsm%
+    set "message=!operation:~14,-2!"
+    echo     ; Print operation >> %outputAsm%
+    echo     mov rsi, message >> %outputAsm%
+    echo     mov rdx, message_length >> %outputAsm%
+    echo     mov rax, 1 >> %outputAsm%
+    echo     mov rdi, 1 >> %outputAsm%
+    echo     syscall >> %outputAsm%
+    exit /b
+)
+
+:: Input Assembly
+echo !operation! | findstr /i "input" > nul && (
+    set "var=!operation:~14,-2!"
+    echo     ; Input operation >> %outputAsm%
+    echo     mov rax, 0 >> %outputAsm%
+    echo     mov rdi, 0 >> %outputAsm%
+    echo     mov rsi, userInput >> %outputAsm%
+    echo     mov rdx, 256 >> %outputAsm%
+    echo     syscall >> %outputAsm%
+    exit /b
+)
+
+:: If Assembly
+echo !operation! | findstr /i "if" > nul && (
+    set "condition=!operation:~14,-2!"
+    echo     ; If operation >> %outputAsm%
+    echo     cmp eax, 0 >> %outputAsm%
+    echo     je .endif >> %outputAsm%
+    echo     ; (condition is true, execute code) >> %outputAsm%
+    echo .endif: >> %outputAsm%
+    exit /b
+)
+
+:: Loop Assembly
+echo !operation! | findstr /i "loop" > nul && (
+    set "iterations=!operation:~14,-2!"
+    echo     ; Loop operation >> %outputAsm%
+    echo     mov ecx, !iterations! >> %outputAsm%
+    echo .loop_start: >> %outputAsm%
+    echo     ; (loop body) >> %outputAsm%
+    echo     loop .loop_start >> %outputAsm%
+    exit /b
+)
+
+:: Store Assembly
+echo !operation! | findstr /i "store" > nul && (
+    set "args=!operation:~14,-2!"
+    echo     ; Store operation >> %outputAsm%
+    echo     mov [varStore], eax >> %outputAsm%
+    exit /b
+)
+
+:: Load Assembly
+echo !operation! | findstr /i "load" > nul && (
+    set "args=!operation:~14,-2!"
+    echo     ; Load operation >> %outputAsm%
+    echo     mov eax, [varStore] >> %outputAsm%
     exit /b
 )
 

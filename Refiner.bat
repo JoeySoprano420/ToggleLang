@@ -1,6 +1,9 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+:: Start timing
+set startTime=%time%
+
 :: Initialize variables
 set "sourceFile=source.tl"
 set "outputJson=program.json"
@@ -71,6 +74,12 @@ GoLink /entry _start program.obj
 echo Running program...
 program.exe
 
+:: End timing
+set endTime=%time%
+
+:: Calculate elapsed time
+call :elapsedTime %startTime% %endTime%
+
 endlocal
 exit /b
 
@@ -126,4 +135,44 @@ echo !operation! | findstr /i "print" > nul && (
     exit /b
 )
 
+exit /b
+
+:: Calculate elapsed time
+:elapsedTime
+setlocal
+set start=%1
+set end=%2
+
+set /A startH=%start:~0,2%
+set /A startM=%start:~3,2%
+set /A startS=%start:~6,2%
+set /A startMS=%start:~9,2%
+
+set /A endH=%end:~0,2%
+set /A endM=%end:~3,2%
+set /A endS=%end:~6,2%
+set /A endMS=%end:~9,2%
+
+set /A elapsedMS=endMS-startMS
+set /A elapsedS=endS-startS
+set /A elapsedM=endM-startM
+set /A elapsedH=endH-startH
+
+if %elapsedMS% LSS 0 (
+    set /A elapsedMS+=100
+    set /A elapsedS-=1
+)
+
+if %elapsedS% LSS 0 (
+    set /A elapsedS+=60
+    set /A elapsedM-=1
+)
+
+if %elapsedM% LSS 0 (
+    set /A elapsedM+=60
+    set /A elapsedH-=1
+)
+
+echo Elapsed time: %elapsedH%:%elapsedM%:%elapsedS%.%elapsedMS%
+endlocal
 exit /b
